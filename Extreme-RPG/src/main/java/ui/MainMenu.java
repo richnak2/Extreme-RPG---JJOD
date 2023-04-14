@@ -18,11 +18,12 @@ public class MainMenu extends Menu{
 
     @Override
     public void run() {
+        printer.printTitle("Main menu");
         handleOptionSelection(options);
     }
 
     private void goToCharacterCreationMenu(){
-        application.switchMenu(new CharacterCreationMenu(this));
+        application.switchMenu(new CharacterCreator(this));
     }
 
 }
