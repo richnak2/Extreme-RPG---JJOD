@@ -17,6 +17,13 @@ public abstract class Menu {
     final String invalidInputMessage = "Invalid input!";
     final String selectOptionMessage = "Select option: ";
 
+    Menu(){}
+
+    Menu(Menu previousMenu){
+        this.previousMenu = previousMenu;
+        copyClassVariablesFromPreviousMenu();
+    }
+
     public abstract void run();
 
     public Menu getPreviousMenu() {

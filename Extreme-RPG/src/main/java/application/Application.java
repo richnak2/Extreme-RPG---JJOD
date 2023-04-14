@@ -16,6 +16,7 @@ public class Application {
     public Application(InputReader inputReader, Printer printer) {
         this.inputReader = inputReader;
         this.printer = printer;
+        this.state = new GameState();
 
         currentMenu = new MainMenu(this);
 
@@ -31,6 +32,10 @@ public class Application {
 
     public Menu getCurrentMenu() {
         return currentMenu;
+    }
+
+    public GameState getState() {
+        return state;
     }
 
     public void start(){
