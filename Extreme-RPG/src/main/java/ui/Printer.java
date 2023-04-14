@@ -1,5 +1,7 @@
 package ui;
 
+import combat.Combat;
+
 import java.io.PrintStream;
 import java.util.Collection;
 

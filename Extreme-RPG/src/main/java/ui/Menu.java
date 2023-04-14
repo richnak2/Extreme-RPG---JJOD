@@ -14,6 +14,13 @@ public abstract class Menu {
     Menu previousMenu;
 
 
+    Menu(){}
+
+    Menu(Menu previousMenu){
+        this.previousMenu = previousMenu;
+        copyClassVariablesFromPreviousMenu();
+    }
+
     public abstract void run();
 
     public Menu getPreviousMenu() {

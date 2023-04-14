@@ -16,6 +16,7 @@ public class Application {
     public Application(InputReader inputReader, Printer printer) {
         this.inputReader = inputReader;
         this.printer = printer;
+        this.state = new GameState();
 
         currentMenu = new MainMenu(this);
         state = new GameState();
