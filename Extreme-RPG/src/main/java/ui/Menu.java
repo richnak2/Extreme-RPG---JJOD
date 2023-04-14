@@ -13,9 +13,6 @@ public abstract class Menu {
 
     Menu previousMenu;
 
-    final String notImplementedMessage = "Functionality not implemented!";
-    final String invalidInputMessage = "Invalid input!";
-    final String selectOptionMessage = "Select option: ";
 
     Menu(){}
 
@@ -54,10 +51,10 @@ public abstract class Menu {
     void handleOptionSelection(List<Option> options) {
         printer.printOptions(options);
         try{
-            int userInput = promptToIntInput(selectOptionMessage);
+            int userInput = promptToIntInput("Select option: ");
             selectOption(options, userInput);
         } catch (IndexOutOfBoundsException | NumberFormatException e) {
-            printer.printError(invalidInputMessage);
+            printer.printError("Invalid input!");
             handleOptionSelection(options);
         } catch (Exception e){
             printer.printError(e.getMessage());
@@ -71,7 +68,7 @@ public abstract class Menu {
     }
 
     void throwNotImplementedException(){
-        throw new RuntimeException(notImplementedMessage);
+        throw new RuntimeException("Functionality not implemented!");
     }
 
 }

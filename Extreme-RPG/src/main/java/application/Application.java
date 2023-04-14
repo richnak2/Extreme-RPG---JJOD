@@ -19,6 +19,7 @@ public class Application {
         this.state = new GameState();
 
         currentMenu = new MainMenu(this);
+        state = new GameState();
 
     }
 

@@ -1,13 +1,18 @@
 package application;
 
+import gameplay.Character;
+
 import java.io.Serializable;
 import gameplay.Character;
 
 public class GameState implements Serializable {
 
-    Character currentCharacter;
+    public Character currentHero;
+      
+    public Character getCurrentHero() {
+        return currentHero;
 
-    public Character getCurrentCharacter() {
-        return currentCharacter;
+    public void setCurrentHero(Character currentHero) {
+        this.currentHero = currentHero;
     }
 }

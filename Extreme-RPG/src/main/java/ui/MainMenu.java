@@ -27,16 +27,19 @@ public class MainMenu extends Menu{
 
     @Override
     public void run() {
+
         List<Option> options;
         if (application.getState().getCurrentCharacter() == null)
             options = noHeroOptions;
         else
             options = heroOptions;
+      
+        printer.printTitle("Main menu");
         handleOptionSelection(options);
     }
 
     private void goToCharacterCreationMenu(){
-        application.switchMenu(new CharacterCreationMenu(this));
+        application.switchMenu(new CharacterCreator(this));
     }
 
 }
