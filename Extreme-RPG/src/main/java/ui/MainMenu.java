@@ -1,6 +1,8 @@
 package ui;
 
 import application.Application;
+import combat.Combat;
+import gameplay.Character;
 
 import java.util.List;
 
@@ -17,7 +19,7 @@ public class MainMenu extends Menu{
     );
 
     private final List<Option> heroOptions = List.of(
-            new Option("Find a fight", this::throwNotImplementedException),
+            new Option("Find a fight", this::startCombat),
             new Option("Visit the shop", this::throwNotImplementedException),
             new Option("Show hero stats", this::throwNotImplementedException),
             new Option("Save hero", this::throwNotImplementedException),
@@ -29,7 +31,7 @@ public class MainMenu extends Menu{
     public void run() {
 
         List<Option> options;
-        if (application.getState().getCurrentCharacter() == null)
+        if (application.getState().getCurrentHero() == null)
             options = noHeroOptions;
         else
             options = heroOptions;
@@ -40,6 +42,11 @@ public class MainMenu extends Menu{
 
     private void goToCharacterCreationMenu(){
         application.switchMenu(new CharacterCreator(this));
+    }
+
+    private void startCombat(){
+        Combat combat = new Combat(application.getState().currentHero, new Character());
+        new CombatMenu(this, combat).run();
     }
 
 }

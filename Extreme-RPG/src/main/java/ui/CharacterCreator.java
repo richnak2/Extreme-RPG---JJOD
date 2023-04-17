@@ -14,9 +14,7 @@ public class CharacterCreator extends Menu {
     private ProfessionManager.Profession chosenProfession;
 
     public CharacterCreator(Menu previousMenu) {
-        this.previousMenu = previousMenu;
-        copyClassVariablesFromPreviousMenu();
-
+        super(previousMenu);
         loadRaces();
         loadProfessions();
     }
@@ -61,6 +59,7 @@ public class CharacterCreator extends Menu {
         hero.setName(name);
         hero.setRace(chosenRace);
         hero.setProfession(chosenProfession);
+        hero.setCurrentHealth(hero.getMaxHealth());
 
         return hero;
     }

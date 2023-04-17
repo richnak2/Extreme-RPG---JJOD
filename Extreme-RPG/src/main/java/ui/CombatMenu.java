@@ -3,6 +3,7 @@ package ui;
 import combat.Combat;
 
 import java.util.List;
+import gameplay.Character;
 
 public class CombatMenu extends Menu{
 
@@ -23,9 +24,12 @@ public class CombatMenu extends Menu{
     public void run() {
 
         printCombatStart();
+        printer.printLine();
         while (!combat.isOver()){
+            printTurn(combat.getHero());
             handleOptionSelection(actionOptions);
             if (!combat.isOver())
+                printTurn(combat.getEnemy());
                 combat.simulateEnemyAction();
         }
         evaluateCombat();
@@ -45,12 +49,33 @@ public class CombatMenu extends Menu{
     }
 
     private void rewardHero(){
-        int level = combat.getHero().getLevel();
-        int xp = combat.rewardHero();
+        long level = combat.getHero().getLevel();
+        long xp = combat.rewardHero();
         if (combat.getHero().getLevel() > level)
             printLevelUpMessage(xp);
         else
             printRewardMessage(xp);
+    }
+
+
+    /**
+     * ---HERO'S TURN---
+     * Hero: 100/150 HP, 20/100 mana
+     * Angry minotaur: x/x hp, x/x mana
+     */
+
+    private void printTurn(Character characterOnTurn){
+        printer.printLine("~~" + characterOnTurn.toString().toUpperCase() + "'S TURN~~");
+        printCharacterStats(combat.getHero());
+        printCharacterStats(combat.getEnemy());
+        printer.printLine();
+    }
+
+    private void printCharacterStats(Character character){
+        printer.printString(character.toString());
+        printer.printString(": " + character.getCurrentHealth() + "/" + character.getMaxHealth() + " HP ");
+        printer.printString(" " + character.getCurrentEnergy() + "/" + character.getMaxEnergy() + " Energy");
+        printer.printLine();
     }
 
     private void printCombatStart(){
@@ -65,13 +90,21 @@ public class CombatMenu extends Menu{
         printer.printMessage(combat.getHero() + " was shamefully crushed by " + combat.getEnemy() + "!");
     }
 
-    private void printLevelUpMessage(int xp){
+    private void printLevelUpMessage(long xp){
         printer.printMessage(combat.getHero() + " gains " + xp + " as a reward and their level rises to "
                 + combat.getHero().getLevel());
     }
 
-    private void printRewardMessage(int xp){
+    private void printRewardMessage(long xp){
         printer.printMessage(combat.getHero() + " gains " + xp + " as a reward.");
+    }
+
+    private void printSuccessfulEscapeMessage(){
+        printer.printMessage(combat.getHero() + " managed to save their life and run away from the fight.");
+    }
+
+    private void printUnsuccessfulEscapeMessage(){
+        printer.printMessage(combat.getHero() + " tried to cowardly escape, but failed!");
     }
 
 

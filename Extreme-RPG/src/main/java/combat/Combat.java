@@ -7,6 +7,11 @@ public class Combat {
     Character hero;
     Character enemy;
 
+    public Combat(Character hero, Character enemy){
+        this.hero = hero;
+        this.enemy = enemy;
+    }
+
     public Character getHero() {
         return hero;
     }

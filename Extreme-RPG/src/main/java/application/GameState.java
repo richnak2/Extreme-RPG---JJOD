@@ -11,6 +11,7 @@ public class GameState implements Serializable {
       
     public Character getCurrentHero() {
         return currentHero;
+    }
 
     public void setCurrentHero(Character currentHero) {
         this.currentHero = currentHero;
