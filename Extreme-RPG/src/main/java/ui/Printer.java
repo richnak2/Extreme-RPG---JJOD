@@ -42,15 +42,15 @@ public class Printer {
     public void printTitle(String title) {
         printLine();
         String decoration = "---";
-        output.println(decoration + title.toUpperCase() + decoration);
+        printLine(decoration + title.toUpperCase() + decoration);
     }
 
     public void printMessage(String message) {
         String decoration = "-";
 
-        output.print(ANSI_YELLOW);
-        output.println(decoration + message);
-        output.print(ANSI_RESET);
+        printString(ANSI_YELLOW);
+        printLine(decoration + message);
+        printString(ANSI_RESET);
     }
 
     public void printOptions(Collection<Option> options) {
