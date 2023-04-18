@@ -15,30 +15,46 @@ public class CombatMenu extends Menu{
     }
 
     private final List<Option> actionOptions = List.of(
-            new Option("Attack", this::throwNotImplementedException),
+            new Option("Attack", this::simpleAttackHero),
             new Option("Special attack", this::throwNotImplementedException),
-            new Option("Run away", this::throwNotImplementedException)
+            new Option("Run away", this::runAway)
     );
+
+    private void simpleAttackHero() {
+        this.combat.simpleAttackHero();
+    }
+
+    private void runAway() {
+        this.combat.heroRun();
+    }
 
     @Override
     public void run() {
 
         printCombatStart();
         printer.printLine();
-        while (!combat.isOver()){
+//        printTurn(combat.getHero());
+        while (!combat.isOver()) {
             printTurn(combat.getHero());
             handleOptionSelection(actionOptions);
-            if (!combat.isOver())
+//            printTurn(combat.getHero());
+            if (!combat.isOver()) {
                 printTurn(combat.getEnemy());
-                combat.simulateEnemyAction();
+                combat.simpleAttackEnemy();
+//                combat.simulateEnemyAction();
+            }
+
         }
         evaluateCombat();
-        application.goToPreviousMenu();
+        this.application.goToPreviousMenu();
 
     }
 
     private void evaluateCombat(){
-        if (combat.heroWon()){
+        if (combat.getRun()){
+            this.printSuccessfulEscapeMessage();
+        }
+        else if (combat.heroWon()){
             printVictoryMessage();
             rewardHero();
         }
@@ -57,7 +73,14 @@ public class CombatMenu extends Menu{
             printRewardMessage(xp);
     }
 
+    private void printHeroEnemy(Character ch1,Character ch2){
+        if (combat.getTurn() > 0){
+            this.printAction();
+        }
+        printCharacterStats(ch1);
+        printCharacterStats(ch2);
 
+    }
     /**
      * ---HERO'S TURN---
      * Hero: 100/150 HP, 20/100 mana
@@ -65,9 +88,19 @@ public class CombatMenu extends Menu{
      */
 
     private void printTurn(Character characterOnTurn){
-        printer.printLine("~~" + characterOnTurn.toString().toUpperCase() + "'S TURN~~");
-        printCharacterStats(combat.getHero());
-        printCharacterStats(combat.getEnemy());
+//        combat.updateTurn();
+        printer.printLine("~~" + characterOnTurn.toString().toUpperCase() + "' TURN_"+combat.getTurn().toString()+"~~");
+
+        combat.updateTurn();
+        if (combat.getTurn()%2 == 0){
+            printHeroEnemy(combat.getEnemy(),combat.getHero());
+        }else{
+            printHeroEnemy(combat.getHero(),combat.getEnemy());
+        }
+        printer.printLine();
+    }
+    private void printAction(){
+        printer.printString(combat.getBasicAttack().getCurrentAttack().getMassage());
         printer.printLine();
     }
 
@@ -108,5 +141,7 @@ public class CombatMenu extends Menu{
     }
 
 
-
+    public Combat getCombat() {
+        return combat;
+    }
 }

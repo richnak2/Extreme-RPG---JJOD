@@ -1,12 +1,16 @@
 package gameplay;
 
+
 public class Character {
     private String name = "Mx.Incognito";
     private RaceManager.Race race = RaceManager.DEFAULT_RACE;
     private ProfessionManager.Profession profession = ProfessionManager.DEFAULT_PROFESSION;
+
     private long currentHealth;
     private int currentEnergy = getMaxEnergy();
     private long experience = 0;
+
+//    private long experience = 0;
 
 
     public long getLevel() {
@@ -34,6 +38,14 @@ public class Character {
     }
     public int getMaxEnergy() {
         return 100;
+    }
+
+    //TODO - count all atributes of armor /100 to get doge change
+    public double getDogeChance() {
+        return 0.2;
+    }
+    public double getMaxDogeChance() {
+        return 0.5;
     }
     public int getCurrentEnergy() {
         return currentEnergy;
