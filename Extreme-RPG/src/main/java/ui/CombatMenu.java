@@ -30,18 +30,15 @@ public class CombatMenu extends Menu{
 
     @Override
     public void run() {
-
+        // TODO - toto striedanie nefunguje ako by malo
         printCombatStart();
         printer.printLine();
-//        printTurn(combat.getHero());
         while (!combat.isOver()) {
             printTurn(combat.getHero());
             handleOptionSelection(actionOptions);
-//            printTurn(combat.getHero());
             if (!combat.isOver()) {
                 printTurn(combat.getEnemy());
                 combat.simpleAttackEnemy();
-//                combat.simulateEnemyAction();
             }
 
         }
@@ -88,9 +85,8 @@ public class CombatMenu extends Menu{
      */
 
     private void printTurn(Character characterOnTurn){
-//        combat.updateTurn();
         printer.printLine("~~" + characterOnTurn.toString().toUpperCase() + "' TURN_"+combat.getTurn().toString()+"~~");
-
+        // TODO - toto je moja implementacia pritovania po tahoch asi zla !!!
         combat.updateTurn();
         if (combat.getTurn()%2 == 0){
             printHeroEnemy(combat.getEnemy(),combat.getHero());
