@@ -11,15 +11,6 @@ import static gameplay.ProfessionManager.Profession.*;
 public class BasicAttackManager {
     Random random = new Random();
 
-    public MutableEntry<AttackOptions, Long, String> getCurrentAttack() {
-        return CURRENT_ATTACK;
-    }
-
-    public static MutableEntry<AttackOptions, Long,String> CURRENT_ATTACK;
-
-    static {
-        CURRENT_ATTACK = new MutableEntry<>(AttackOptions.MISS, (long) 0, "nothing had happened");
-    }
 
     public enum AttackOptions {
         BASIC,
@@ -55,25 +46,18 @@ public class BasicAttackManager {
     }
     public void BasicAttack(Character attacker, Character defender){
         long defenderDefenseHealth = defender.getCurrentHealth() + defender.getDefense();
-        CURRENT_ATTACK.setValue(attacker.getPower());
-        CURRENT_ATTACK.setKey(AttackOptions.BASIC);
-        CURRENT_ATTACK.setMassage(String.format("-> basic (%d + %d ) - %d",defender.getCurrentHealth(),defender.getDefense(),attacker.getPower())  );
         defender.setCurrentHealth(defenderDefenseHealth - attacker.getPower());
+        System.out.println(attacker.toString() + "  ->BASIC     " + defender.toString());
     }
     public void CriticalAttack(Character attacker, Character defender){
         long defenderDefenseHealth = defender.getCurrentHealth() + defender.getDefense();
         long attackerPowerCritical = attacker.getPower() * getCriticalBonus(attacker,defender);
-        CURRENT_ATTACK.setValue(attackerPowerCritical);
-        CURRENT_ATTACK.setKey(AttackOptions.CRITICAL);
-        CURRENT_ATTACK.setMassage(String.format("-> Critical (%d + %d ) - (%d * %d)",defender.getCurrentHealth(),defender.getDefense(),attacker.getPower(),getCriticalBonus(attacker,defender))  );
-
         defender.setCurrentHealth(defenderDefenseHealth - attackerPowerCritical);
+        System.out.println(attacker.toString() + "  ->CRITICAL     " + defender.toString());
     }
 
-    public void BasicMiss(){
-        CURRENT_ATTACK.setValue(0L);
-        CURRENT_ATTACK.setKey(AttackOptions.MISS);
-        CURRENT_ATTACK.setMassage("-> Miss ");
+    public void BasicMiss(Character attacker, Character defender) {
+        System.out.println(attacker.toString() + "  ->MISS     " + defender.toString());
     }
 
     public static double getProbabilityBasicAttack(Character attacker, Character defender){
@@ -85,13 +69,13 @@ public class BasicAttackManager {
         return 0.3;
     }
     public void simulateAttack(Character attacker, Character defender) {
-        System.out.println(attacker.toString() + "  ->     " + defender.toString());
+//        System.out.println(attacker.toString() + "  ->     " + defender.toString());
         if (random.nextDouble() < getProbabilityCriticalAttack(attacker, defender) && random.nextDouble() > defender.getDogeChance()) {
             this.CriticalAttack(attacker,defender);
         } else if (random.nextDouble() < getProbabilityBasicAttack(attacker, defender) && random.nextDouble() > defender.getDogeChance()){
             this.BasicAttack(attacker, defender);
         }else {
-            this.BasicMiss();
+            this.BasicMiss(attacker, defender);
         }
     }
 }

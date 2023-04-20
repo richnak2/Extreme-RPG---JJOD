@@ -30,7 +30,6 @@ public class CombatMenu extends Menu{
 
     @Override
     public void run() {
-        // TODO - toto striedanie nefunguje ako by malo
         printCombatStart();
         printer.printLine();
         while (!combat.isOver()) {
@@ -70,14 +69,7 @@ public class CombatMenu extends Menu{
             printRewardMessage(xp);
     }
 
-    private void printHeroEnemy(Character ch1,Character ch2){
-        if (combat.getTurn() > 0){
-            this.printAction();
-        }
-        printCharacterStats(ch1);
-        printCharacterStats(ch2);
 
-    }
     /**
      * ---HERO'S TURN---
      * Hero: 100/150 HP, 20/100 mana
@@ -85,18 +77,9 @@ public class CombatMenu extends Menu{
      */
 
     private void printTurn(Character characterOnTurn){
-        printer.printLine("~~" + characterOnTurn.toString().toUpperCase() + "' TURN_"+combat.getTurn().toString()+"~~");
-        // TODO - toto je moja implementacia pritovania po tahoch asi zla !!!
-        combat.updateTurn();
-        if (combat.getTurn()%2 == 0){
-            printHeroEnemy(combat.getEnemy(),combat.getHero());
-        }else{
-            printHeroEnemy(combat.getHero(),combat.getEnemy());
-        }
-        printer.printLine();
-    }
-    private void printAction(){
-        printer.printString(combat.getBasicAttack().getCurrentAttack().getMassage());
+        printer.printLine("~~" + characterOnTurn.toString().toUpperCase() + "' TURN_~~");
+        printCharacterStats(combat.getHero());
+        printCharacterStats(combat.getEnemy());
         printer.printLine();
     }
 

@@ -7,15 +7,12 @@ public class Combat {
     private boolean runAway;
     Character hero;
     Character enemy;
-    Integer turnCounter;
-
     BasicAttackManager basicAttack;
 
     public Combat(Character hero, Character enemy){
         this.hero = hero;
         this.enemy = enemy;
         this.runAway = false;
-        this.turnCounter = -1;
         this.basicAttack = new BasicAttackManager();
     }
 
@@ -27,9 +24,7 @@ public class Combat {
         return enemy;
     }
 
-    public BasicAttackManager getBasicAttack(){return  basicAttack;}
 
-    public Integer getTurn(){return  turnCounter;}
 
     //TODO
     public boolean isOver(){
@@ -44,9 +39,6 @@ public class Combat {
     }
 
     //TODO
-    public void simpleAttackEnemy(){
-        basicAttack.simulateAttack(this.enemy,this.hero);
-    }
     public void heroRun(){
         this.runAway = this.basicAttack.random.nextDouble()<0.5;
     }
@@ -64,7 +56,7 @@ public class Combat {
         basicAttack.simulateAttack(this.hero,this.enemy);
     }
 
-    public void updateTurn() {
-        this.turnCounter ++;
+    public void simpleAttackEnemy(){
+        basicAttack.simulateAttack(this.enemy,this.hero);
     }
 }
