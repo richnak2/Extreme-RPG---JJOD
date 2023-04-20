@@ -22,11 +22,18 @@ public class Combat {
 
     //TODO
     public boolean isOver(){
+        if (hero.getCurrentHealth() <= 0 || enemy.getCurrentHealth() <= 0) {
+            return true;
+        }
+        // hra konci aj vtedy, ak sa hero rozhodne utiect
         return false;
     }
 
     public boolean heroWon(){
-        return false;
+        if (hero.getCurrentHealth() <= 0) { // alebo hrac utiekol
+            return false;
+        }
+        return true;
     }
 
     //TODO

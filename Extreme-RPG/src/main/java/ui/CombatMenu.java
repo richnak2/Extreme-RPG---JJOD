@@ -25,7 +25,7 @@ public class CombatMenu extends Menu{
 
         printCombatStart();
         printer.printLine();
-        while (!combat.isOver()){
+        while (!combat.isOver()){ // alebo not ran away
             printTurn(combat.getHero());
             handleOptionSelection(actionOptions);
             if (!combat.isOver())
