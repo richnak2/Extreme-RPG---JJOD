@@ -3,6 +3,7 @@ package combat;
 import gameplay.Character;
 import gameplay.ProfessionManager;
 import satic.RandomGenerator;
+import ui.Printer;
 
 import java.util.*;
 
@@ -11,13 +12,11 @@ import static gameplay.ProfessionManager.Profession.*;
 
 public class BasicAttackManager {
 
+    Printer printer;
 
-    public enum AttackOptions {
-        BASIC,
-        CRITICAL,
-        MISS,
+    BasicAttackManager(Printer printer){
+        this.printer = printer;
     }
-
 
     private static final Map<ProfessionManager.Profession,Map<ProfessionManager.Profession, Integer>> criticalBonus = new HashMap<>();
     static {
@@ -47,17 +46,18 @@ public class BasicAttackManager {
     public void BasicAttack(Character attacker, Character defender){
         long defenderDefenseHealth = defender.getCurrentHealth() + defender.getDefense();
         defender.setCurrentHealth(defenderDefenseHealth - attacker.getPower());
-        System.out.println(attacker.toString() + "  ->BASIC     " + defender.toString());
+        printer.printCombatMessage(attacker + " hit " + defender + " with a basic attack!");
     }
+
     public void CriticalAttack(Character attacker, Character defender){
         long defenderDefenseHealth = defender.getCurrentHealth() + defender.getDefense();
         long attackerPowerCritical = attacker.getPower() * getCriticalBonus(attacker,defender);
         defender.setCurrentHealth(defenderDefenseHealth - attackerPowerCritical);
-        System.out.println(attacker.toString() + "  ->CRITICAL     " + defender.toString());
+        printer.printCombatMessage(attacker + " hit " + defender + " with a critical strike, dealing massive damage!");
     }
 
     public void BasicMiss(Character attacker, Character defender) {
-        System.out.println(attacker.toString() + "  ->MISS     " + defender.toString());
+        printer.printCombatMessage(attacker + " attacked " + defender + ", but missed!");
     }
 
     public static double getProbabilityBasicAttack(Character attacker, Character defender){
@@ -70,9 +70,9 @@ public class BasicAttackManager {
     }
     public void simulateAttack(Character attacker, Character defender) {
 //        System.out.println(attacker.toString() + "  ->     " + defender.toString());
-        if (RandomGenerator.getRandomDouble() < getProbabilityCriticalAttack(attacker, defender) && RandomGenerator.getRandomDouble() > defender.getDogeChance()) {
+        if (RandomGenerator.getRandomDouble() < getProbabilityCriticalAttack(attacker, defender) && RandomGenerator.getRandomDouble() > defender.getDodgeChance()) {
             this.CriticalAttack(attacker,defender);
-        } else if (RandomGenerator.getRandomDouble() < getProbabilityBasicAttack(attacker, defender) && RandomGenerator.getRandomDouble() > defender.getDogeChance()){
+        } else if (RandomGenerator.getRandomDouble() < getProbabilityBasicAttack(attacker, defender) && RandomGenerator.getRandomDouble() > defender.getDodgeChance()){
             this.BasicAttack(attacker, defender);
         }else {
             this.BasicMiss(attacker, defender);

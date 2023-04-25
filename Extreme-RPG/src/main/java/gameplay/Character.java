@@ -10,9 +10,6 @@ public class Character {
     private int currentEnergy = getMaxEnergy();
     private long experience = 0;
 
-//    private long experience = 0;
-
-
     public long getLevel() {
         return calculateLevel();
     }
@@ -40,13 +37,6 @@ public class Character {
         return 100;
     }
 
-    //TODO - count all atributes of armor /100 to get doge change
-    public double getDogeChance() {
-        return 0.2;
-    }
-    public double getMaxDogeChance() {
-        return 0.5;
-    }
     public int getCurrentEnergy() {
         return currentEnergy;
     }
@@ -79,5 +69,12 @@ public class Character {
     @Override
     public String toString() {
         return name;
+    }
+
+
+    // Ondrej
+    //TODO - count all atributes of armor /100 to get doge change
+    public double getDodgeChance() {
+        return 0.2;
     }
 }
