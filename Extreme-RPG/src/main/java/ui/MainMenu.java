@@ -49,7 +49,7 @@ public class MainMenu extends Menu{
         Character enemy = new Character();
         enemy.setProfession(ProfessionManager.Profession.GUARDIAN);
         enemy.setCurrentHealth(enemy.getMaxHealth());
-        Combat combat = new Combat(application.getState().currentHero, enemy);
+        Combat combat = new Combat(application.getState().currentHero, enemy, printer);
         application.switchMenu(new CombatMenu(this, combat));
     }
 

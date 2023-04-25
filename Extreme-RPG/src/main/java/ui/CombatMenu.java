@@ -25,7 +25,7 @@ public class CombatMenu extends Menu{
     }
 
     private void runAway() {
-        this.combat.heroRun();
+        this.combat.attemptEscape();
     }
 
     @Override
@@ -63,7 +63,7 @@ public class CombatMenu extends Menu{
 
     private void rewardHero(){
         long level = combat.getHero().getLevel();
-        long xp = combat.rewardHero();
+        long xp = combat.addExperienceToHero();
         if (combat.getHero().getLevel() > level)
             printLevelUpMessage(xp);
         else
@@ -78,7 +78,7 @@ public class CombatMenu extends Menu{
      */
 
     private void printTurn(Character characterOnTurn){
-        printer.printLine("~~" + characterOnTurn.toString().toUpperCase() + "' TURN_~~");
+        printer.printLine("~~" + characterOnTurn.toString().toUpperCase() + "'S TURN~~");
         printCharacterStats(combat.getHero());
         printCharacterStats(combat.getEnemy());
         printer.printLine();

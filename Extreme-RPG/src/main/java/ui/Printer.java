@@ -1,7 +1,5 @@
 package ui;
 
-import combat.Combat;
-
 import java.io.PrintStream;
 import java.util.Collection;
 
@@ -51,6 +49,15 @@ public class Printer {
         printString(ANSI_YELLOW);
         printLine(decoration + message);
         printString(ANSI_RESET);
+    }
+
+    public void printCombatMessage(String message) {
+        String decoration = "-";
+
+        printString(ANSI_RED);
+        printLine(decoration + message);
+        printString(ANSI_RESET);
+        printLine();
     }
 
     public void printOptions(Collection<Option> options) {

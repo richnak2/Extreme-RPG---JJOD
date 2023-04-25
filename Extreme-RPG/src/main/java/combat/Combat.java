@@ -2,19 +2,27 @@ package combat;
 
 import gameplay.Character;
 import satic.RandomGenerator;
+import ui.Printer;
 
 public class Combat {
 
-    private boolean runAway;
+    private boolean heroEscaped;
     Character hero;
     Character enemy;
     BasicAttackManager basicAttack;
 
-    public Combat(Character hero, Character enemy){
+    public Combat(Character hero, Character enemy, Printer printer){
         this.hero = hero;
         this.enemy = enemy;
-        this.runAway = false;
-        this.basicAttack = new BasicAttackManager();
+        this.heroEscaped = false;
+        this.basicAttack = new BasicAttackManager(printer);
+
+        setMaxHealthToCombatants();
+    }
+
+    private void setMaxHealthToCombatants() {
+        hero.setCurrentHealth(hero.getMaxHealth());
+        enemy.setCurrentHealth(enemy.getMaxHealth());
     }
 
     public Character getHero() {
@@ -25,37 +33,33 @@ public class Combat {
         return enemy;
     }
 
-
-
-    //TODO
     public boolean isOver(){
         if (hero.getCurrentHealth() <= 0 || enemy.getCurrentHealth() <= 0) {
             return true;
         }
-        // hra konci aj vtedy, ak sa hero rozhodne utiect
-        return false;
+        return heroEscaped;
     }
 
     public boolean heroWon(){
         if (hero.getCurrentHealth() > 0 && enemy.getCurrentHealth() > 0) {
             return false;
         }
-        if (hero.getCurrentHealth() <= 0) { // alebo hrac utiekol
+        if (hero.getCurrentHealth() <= 0 || heroEscaped) {
             return false;
         }
         return true;
     }
 
-    //TODO
-    public void heroRun(){
-        this.runAway = RandomGenerator.getRandomDouble()<0.5;
+    public void attemptEscape(){
+        this.heroEscaped = RandomGenerator.getRandomDouble() < 0.5;
     }
+
     public boolean getRun(){
-        return this.runAway;
+        return this.heroEscaped;
     }
 
     //TODO
-    public long rewardHero(){
+    public long addExperienceToHero(){
         //zvsit xp-cka hrdinovi a vratit kolko xp-cok pribudlo
         return 100;
     }
