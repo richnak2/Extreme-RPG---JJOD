@@ -1,6 +1,7 @@
 package combat;
 
 import gameplay.Character;
+import satic.RandomGenerator;
 
 public class Combat {
 
@@ -40,7 +41,7 @@ public class Combat {
 
     //TODO
     public void heroRun(){
-        this.runAway = this.basicAttack.random.nextDouble()<0.5;
+        this.runAway = RandomGenerator.getRandomDouble()<0.5;
     }
     public boolean getRun(){
         return this.runAway;

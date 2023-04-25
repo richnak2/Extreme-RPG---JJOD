@@ -2,6 +2,7 @@ package combat;
 
 import gameplay.Character;
 import gameplay.ProfessionManager;
+import satic.RandomGenerator;
 
 import java.util.*;
 
@@ -9,7 +10,6 @@ import static gameplay.ProfessionManager.Profession.*;
 
 
 public class BasicAttackManager {
-    Random random = new Random();
 
 
     public enum AttackOptions {
@@ -70,9 +70,9 @@ public class BasicAttackManager {
     }
     public void simulateAttack(Character attacker, Character defender) {
 //        System.out.println(attacker.toString() + "  ->     " + defender.toString());
-        if (random.nextDouble() < getProbabilityCriticalAttack(attacker, defender) && random.nextDouble() > defender.getDogeChance()) {
+        if (RandomGenerator.getRandomDouble() < getProbabilityCriticalAttack(attacker, defender) && RandomGenerator.getRandomDouble() > defender.getDogeChance()) {
             this.CriticalAttack(attacker,defender);
-        } else if (random.nextDouble() < getProbabilityBasicAttack(attacker, defender) && random.nextDouble() > defender.getDogeChance()){
+        } else if (RandomGenerator.getRandomDouble() < getProbabilityBasicAttack(attacker, defender) && RandomGenerator.getRandomDouble() > defender.getDogeChance()){
             this.BasicAttack(attacker, defender);
         }else {
             this.BasicMiss(attacker, defender);
