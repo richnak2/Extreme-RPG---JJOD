@@ -6,10 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import gameplay.Character;
 import gameplay.ProfessionManager;
 import org.junit.jupiter.api.Test;
+import application.Application;
+import ui.MainMenu;
 
 public class CombatTest {
     public Combat setupCombat(ProfessionManager.Profession professionHero, ProfessionManager.Profession professionEnemy) {
-
         Character hero = new Character();
         hero.setProfession(professionHero);
         hero.setCurrentHealth(hero.getMaxHealth());
@@ -91,5 +92,15 @@ public class CombatTest {
         Combat combat = setupCombat(GUARDIAN,MAGE);
         combat.getEnemy().setCurrentHealth(-50);
         assertTrue(combat.heroWon());
+    }
+
+    @Test
+    void basicAttack(){
+        Combat combat = setupCombatTest(GUARDIAN,MAGE);
+        combat.basicAttack.BasicAttack(combat.getHero(), combat.getEnemy());
+        assertEquals(combat.getHero().getMaxHealth(),combat.getHero().getCurrentHealth());
+        long damageWitchShouldBeDealt = combat.getHero().getPower() - combat.getEnemy().getDefense();
+        long maxHealthOfEnemyBeforeAttack = combat.getEnemy().getMaxHealth();
+        assertEquals(combat.getEnemy().getCurrentHealth(),maxHealthOfEnemyBeforeAttack - damageWitchShouldBeDealt);
     }
 }
