@@ -3,6 +3,7 @@ package ui;
 import application.Application;
 import combat.Combat;
 import gameplay.Character;
+import gameplay.ProfessionManager;
 
 import java.util.List;
 
@@ -45,8 +46,11 @@ public class MainMenu extends Menu{
     }
 
     private void startCombat(){
-        Combat combat = new Combat(application.getState().currentHero, new Character());
-        new CombatMenu(this, combat).run();
+        Character enemy = new Character();
+        enemy.setProfession(ProfessionManager.Profession.GUARDIAN);
+        enemy.setCurrentHealth(enemy.getMaxHealth());
+        Combat combat = new Combat(application.getState().currentHero, enemy);
+        application.switchMenu(new CombatMenu(this, combat));
     }
 
 }

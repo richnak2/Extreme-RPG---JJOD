@@ -1,15 +1,20 @@
 package combat;
 
 import gameplay.Character;
+import satic.RandomGenerator;
 
 public class Combat {
 
+    private boolean runAway;
     Character hero;
     Character enemy;
+    BasicAttackManager basicAttack;
 
     public Combat(Character hero, Character enemy){
         this.hero = hero;
         this.enemy = enemy;
+        this.runAway = false;
+        this.basicAttack = new BasicAttackManager();
     }
 
     public Character getHero() {
@@ -20,22 +25,39 @@ public class Combat {
         return enemy;
     }
 
+
+
     //TODO
     public boolean isOver(){
-        return false;
+        return this.heroWon() || this.enemyWon() || this.runAway;
     }
 
     public boolean heroWon(){
-        return false;
+        return this.enemy.getCurrentHealth() <=  0;
+    }
+    public boolean enemyWon(){
+        return this.hero.getCurrentHealth() <=  0;
     }
 
     //TODO
-    public void simulateEnemyAction(){}
+    public void heroRun(){
+        this.runAway = RandomGenerator.getRandomDouble()<0.5;
+    }
+    public boolean getRun(){
+        return this.runAway;
+    }
 
     //TODO
-    public int rewardHero(){
+    public long rewardHero(){
         //zvsit xp-cka hrdinovi a vratit kolko xp-cok pribudlo
-        return 0;
+        return 100;
     }
 
+    public void simpleAttackHero(){
+        basicAttack.simulateAttack(this.hero,this.enemy);
+    }
+
+    public void simpleAttackEnemy(){
+        basicAttack.simulateAttack(this.enemy,this.hero);
+    }
 }

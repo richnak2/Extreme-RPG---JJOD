@@ -51,8 +51,10 @@ public class Application {
 
     public void goToPreviousMenu(){
         Menu previousMenu = currentMenu.getPreviousMenu();
-        if (previousMenu == null)
+        if (previousMenu == null) {
             return;
+        }
+
         currentMenu = previousMenu;
         currentMenu.run();
     }

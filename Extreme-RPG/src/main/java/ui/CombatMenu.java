@@ -15,30 +15,42 @@ public class CombatMenu extends Menu{
     }
 
     private final List<Option> actionOptions = List.of(
-            new Option("Attack", this::throwNotImplementedException),
+            new Option("Attack", this::simpleAttackHero),
             new Option("Special attack", this::throwNotImplementedException),
-            new Option("Run away", this::throwNotImplementedException)
+            new Option("Run away", this::runAway)
     );
+
+    private void simpleAttackHero() {
+        this.combat.simpleAttackHero();
+    }
+
+    private void runAway() {
+        this.combat.heroRun();
+    }
 
     @Override
     public void run() {
-
         printCombatStart();
         printer.printLine();
-        while (!combat.isOver()){
+        while (!combat.isOver()) {
             printTurn(combat.getHero());
             handleOptionSelection(actionOptions);
-            if (!combat.isOver())
+            if (!combat.isOver()) {
                 printTurn(combat.getEnemy());
-                combat.simulateEnemyAction();
+                combat.simpleAttackEnemy();
+            }
+
         }
         evaluateCombat();
-        application.goToPreviousMenu();
+        this.application.goToPreviousMenu();
 
     }
 
     private void evaluateCombat(){
-        if (combat.heroWon()){
+        if (combat.getRun()){
+            this.printSuccessfulEscapeMessage();
+        }
+        else if (combat.heroWon()){
             printVictoryMessage();
             rewardHero();
         }
@@ -65,7 +77,7 @@ public class CombatMenu extends Menu{
      */
 
     private void printTurn(Character characterOnTurn){
-        printer.printLine("~~" + characterOnTurn.toString().toUpperCase() + "'S TURN~~");
+        printer.printLine("~~" + characterOnTurn.toString().toUpperCase() + "' TURN_~~");
         printCharacterStats(combat.getHero());
         printCharacterStats(combat.getEnemy());
         printer.printLine();
@@ -108,5 +120,7 @@ public class CombatMenu extends Menu{
     }
 
 
-
+    public Combat getCombat() {
+        return combat;
+    }
 }
