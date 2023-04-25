@@ -30,6 +30,9 @@ public class Combat {
     }
 
     public boolean heroWon(){
+        if (hero.getCurrentHealth() > 0 && enemy.getCurrentHealth() > 0) {
+            return false;
+        }
         if (hero.getCurrentHealth() <= 0) { // alebo hrac utiekol
             return false;
         }
