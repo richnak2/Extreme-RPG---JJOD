@@ -29,14 +29,21 @@ public class Combat {
 
     //TODO
     public boolean isOver(){
-        return this.heroWon() || this.enemyWon() || this.runAway;
+        if (hero.getCurrentHealth() <= 0 || enemy.getCurrentHealth() <= 0) {
+            return true;
+        }
+        // hra konci aj vtedy, ak sa hero rozhodne utiect
+        return false;
     }
 
     public boolean heroWon(){
-        return this.enemy.getCurrentHealth() <=  0;
-    }
-    public boolean enemyWon(){
-        return this.hero.getCurrentHealth() <=  0;
+        if (hero.getCurrentHealth() > 0 && enemy.getCurrentHealth() > 0) {
+            return false;
+        }
+        if (hero.getCurrentHealth() <= 0) { // alebo hrac utiekol
+            return false;
+        }
+        return true;
     }
 
     //TODO
